@@ -1,63 +1,65 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
 
-void merge(int arr[], int left, int mid, int right) {
-    int i, j, k;
-    int n1 = mid - left + 1;
-    int n2 = right - mid;
+void merge(int arr[] , int lo , int mid , int hi);
+void mergeSort(int arr[], int lo , int hi){
+    if(lo < hi){
+       int mid = (lo+hi)/2;
+       mergeSort(arr,lo,mid);
+       mergeSort(arr,mid+1,hi);
+       merge(arr,lo,mid,hi);
+    }
+}
 
-    int leftArr[n1], rightArr[n2];
-
-    for (i = 0; i < n1; i++)
-        leftArr[i] = arr[left + i];
-    for (j = 0; j < n2; j++)
-        rightArr[j] = arr[mid + 1 + j];
-
-    i = 0;
-    j = 0;
-    k = left;
-    while (i < n1 && j < n2) {
-        if (leftArr[i] <= rightArr[j]) {
-            arr[k] = leftArr[i];
-            i++;
-        }
-        else {
-            arr[k] = rightArr[j];
+void merge(int arr[] , int lo , int mid , int hi){
+    int i = lo ;
+    int j = mid+1;
+    int k = lo;
+    //initialize a new array b with length hi+1
+    int brr [hi+1] ;
+    while(i<=mid && j<=hi){
+        if(arr[i]<=arr[j]){
+            brr[k] = arr[i];
+            i++; k++; 
+        }else{
+            brr[k] = arr[j];
             j++;
+            k++;
+
         }
-        k++;
     }
-
-    while (i < n1) {
-        arr[k] = leftArr[i];
-        i++;
-        k++;
+    while(i<=mid){
+         brr[k] = arr[i];
+            i++; k++; 
     }
-
-    while (j < n2) {
-        arr[k] = rightArr[j];
-        j++;
-        k++;
+    while(j<=hi){
+        brr[k] = arr[j];
+            j++;
+            k++;
     }
-}
-
-void mergeSort(int arr[], int left, int right) {
-    if (left < right) {
-      
-        int mid = left + (right - left) / 2;
-
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
-
+    //copy brr to arr 
+    for(int x =  lo ; x<=hi;x++){
+        arr[x] = brr[x];
     }
 }
 
-int main() {
-    int arr[] = { 12, 11, 13, 5, 6, 7 };
+int main(){
+    int arr [] =  { 3, 5, -2, 1, -4 };
+    int lo = 0;
     int n = sizeof(arr) / sizeof(arr[0]);
-	
+    int hi = n-1;
+    printf("Before sorting: ");
+    for(int i = 0 ; i < n ;i++){
+        printf("%d ",arr[i]);
+    }
 
-    for (int i = 0; i < n; i++)
-        printf("%d ", arr[i]);
+    mergeSort(arr,lo,hi);
+    printf("\n");
+    printf("After sorting: ");
+    for(int i = 0 ; i < n ;i++){
+        printf("%d ",arr[i]);
+    }
+
+
     return 0;
+
 }
