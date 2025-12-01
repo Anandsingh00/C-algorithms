@@ -10,7 +10,7 @@ int main(){
     //Applying Selection Sort algorithm
     for(int i = 0 ; i < n ; i++){
         int minIdx = i;
-        for(int j = i +  1 ;j <= n-1 ; j++){
+        for(int j = i + 1; j <= n-1 ; j++){
             if(arr[minIdx]>arr[j]){
                 minIdx = j;
             }
